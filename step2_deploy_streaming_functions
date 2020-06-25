@@ -1,0 +1,22 @@
+##Deploy your streaming function. The implementation code is in the ./functions/streaming folder. It might take a few minutes to finish.
+gcloud functions deploy streaming --region=${REGION} \
+    --source=/home/neerajshukla989/solutions-gcs-bq-streaming-functions-python/functions/streaming --runtime=python37 \
+    --stage-bucket=${FUNCTIONS_BUCKET} \
+    --trigger-bucket=${FILES_SOURCE}
+
+
+##Deploy streaming_error function to handle errors. It might take a few minutes.
+gcloud functions deploy streaming_error --region=${REGION} \
+    --source=/home/neerajshukla989/solutions-gcs-bq-streaming-functions-python/functions/move_file \
+    --entry-point=move_file --runtime=python37 \
+    --stage-bucket=${FUNCTIONS_BUCKET} \
+    --trigger-topic=${STREAMING_ERROR_TOPIC} \
+    --set-env-vars SOURCE_BUCKET=${FILES_SOURCE},DESTINATION_BUCKET=${FILES_ERROR}
+
+##Deploy streaming_success function to handle success. It might take a few minutes.
+gcloud functions deploy streaming_success --region=${REGION} \
+    --source=/home/neerajshukla989/solutions-gcs-bq-streaming-functions-python/functions/move_file \
+    --entry-point=move_file --runtime=python37 \
+    --stage-bucket=${FUNCTIONS_BUCKET} \
+    --trigger-topic=${STREAMING_SUCCESS_TOPIC} \
+    --set-env-vars SOURCE_BUCKET=${FILES_SOURCE},DESTINATION_BUCKET=${FILES_SUCCESS}
