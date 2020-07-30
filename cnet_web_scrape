@@ -18,3 +18,14 @@ date = results.find('time')
 category = results.find_all('a', class_='tag')
 product = results.find('h2', class_='c-metaCard_prodName')
 
+review_text = ''
+for part in body:
+    if(part.text == 'Be respectful, keep it civil and stay on topic. We delete comments that violate our policy, which we encourage you to read. Discussion threads can be closed at any time at our discretion.'):
+        continue
+    review_text += str(part.text)
+    
+cats = [cat.text for cat in category]
+
+data = {'Product Name':[product.text], 'Product Category':[cats[1]], 'Review Source':['CNet'], 'Review Headline':[title.text], "Review Text":[review_text], "Review Author":[author.text], "Review Date":[date.text]}
+df = pandas.DataFrame(data)
+df.to_csv('cnet_reviews')
