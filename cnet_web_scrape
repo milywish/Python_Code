@@ -1,5 +1,5 @@
-#Work in progress - pulls and parses HTML from one review on CNet
-#Completed script will pull from multiple reviews on CNet and create flat file to load into GCP bucket
+#Work in progress - pulls and parses HTML from one review on CNet and creates a flat file
+#Completed script will pull from multiple reviews on CNet
 
 import requests
 from bs4 import BeautifulSoup
