@@ -26,6 +26,6 @@ for part in body:
     
 cats = [cat.text for cat in category]
 
-data = {'Product Name':[product.text], 'Product Category':[cats[1]], 'Review Source':['CNet'], 'Review Headline':[title.text], "Review Text":[review_text], "Review Author":[author.text], "Review Date":[date.text]}
+data = {'Product Name':[product.text], 'Product Category':[cats[1]], 'Review Source':['CNet'], 'Review Headline':[title.text], "Review Text":[review_text], "Review Rating":[rating.text.strip()], "Review Author":[author.text], "Review Date":[date.text]}
 df = pandas.DataFrame(data)
 df.to_csv('cnet_reviews')
